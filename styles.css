@@ -1,15 +1,45 @@
-.header {
+* {
+font-family: 'Roboto', sans-serif;
+}
 
+h1 {
+font-size: 48px;
+color: #F9FAF8;
+font-weight: 900;
+}
+
+li {
+    font-size: 18px;
+    color: #E5E7EB;
+}
+
+h2 {
+font-size: 24px;
+}
+
+p {
+font-size: 18px;
+}
+
+.header {
+display: flex;
+padding: 20px;
 }
 
 .second {
-
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .third {
-
+display: flex;
 }
 
 .footer {
-    
+display: flex;
+}
+
+.header, .footer {
+    background-color: #1F2937;
 }
