@@ -65,80 +65,80 @@ document.head.appendChild(style);
 
 // Enhanced form handling with better UX
 const contactForm = document.getElementById('contactForm');
+console.log('Contact form found:', !!contactForm);
 if (contactForm) {
-  contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+  console.log('Contact form element:', contactForm);
+  const submitBtn = contactForm.querySelector('button[type="button"]');
+  console.log('Submit button found:', !!submitBtn);
+  if (submitBtn) {
+    console.log('Submit button element:', submitBtn);
+    console.log('Adding click listener to button');
+    submitBtn.addEventListener('click', function(e) {
+      console.log('Button click event fired on:', this);
+      e.preventDefault();
+      console.log('Prevented default');
+      submitBtn.textContent = 'Clicked!'; // Temporary to test
 
-    // Get form data
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
+      // Get form data
+      const formData = new FormData(contactForm);
+      const data = Object.fromEntries(formData);
+      console.log('Form data:', data);
 
-    // Enhanced validation with visual feedback
-    const requiredFields = ['name', 'email', 'business', 'message'];
-    let isValid = true;
+      // Enhanced validation with visual feedback
+      const requiredFields = ['name', 'email', 'business', 'message'];
+      let isValid = true;
 
-    requiredFields.forEach(field => {
-      const element = document.getElementById(field);
+      requiredFields.forEach(field => {
+        const element = document.getElementById(field);
 
-      if (!data[field] || data[field].trim() === '') {
-        element.style.borderColor = '#ef4444';
-        element.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.08)';
-        element.style.transform = 'translateY(0)';
-        isValid = false;
-      } else {
-        element.style.borderColor = '#10b981';
-        element.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.08)';
-        element.style.transform = 'translateY(-2px)';
+        if (!data[field] || data[field].trim() === '') {
+          element.style.borderColor = '#ef4444';
+          element.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.08)';
+          element.style.transform = 'translateY(0)';
+          isValid = false;
+        } else {
+          element.style.borderColor = '#10b981';
+          element.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.08)';
+          element.style.transform = 'translateY(-2px)';
+        }
+      });
+
+      if (!isValid) {
+        // Shake animation for invalid form
+        contactForm.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => contactForm.style.animation = '', 500);
+        alert('Please fill in all required fields.');
+        return;
       }
+
+      // Enhanced loading state
+      const originalText = submitBtn.textContent;
+      const originalBg = submitBtn.style.background;
+
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+      submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      submitBtn.innerHTML = '<span style="display: inline-block; animation: spin 1s linear infinite;">⟳</span> Sending...';
+
+      // Simulate API call with progress
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += 10;
+        if (progress >= 100) {
+          clearInterval(progressInterval);
+
+          // Success state
+          submitBtn.innerHTML = '✓ Message Sent!';
+          submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+          // Redirect to thank you page after 2 seconds
+          setTimeout(() => {
+            window.location.href = 'thank-you.html';
+          }, 2000);
+        }
+      }, 200);
     });
-
-    if (!isValid) {
-      // Shake animation for invalid form
-      this.style.animation = 'shake 0.5s ease-in-out';
-      setTimeout(() => this.style.animation = '', 500);
-      return;
-    }
-
-    // Enhanced loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    const originalBg = submitBtn.style.background;
-
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-    submitBtn.innerHTML = '<span style="display: inline-block; animation: spin 1s linear infinite;">⟳</span> Sending...';
-
-    // Simulate API call with progress
-    let progress = 0;
-    const progressInterval = setInterval(() => {
-      progress += 10;
-      if (progress >= 100) {
-        clearInterval(progressInterval);
-
-        // Success state
-        submitBtn.innerHTML = '✓ Message Sent!';
-        submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          this.reset();
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-          submitBtn.style.background = originalBg;
-          submitBtn.innerHTML = originalText;
-
-          // Reset field styles
-          requiredFields.forEach(field => {
-            const element = document.getElementById(field);
-            element.style.borderColor = 'var(--border)';
-            element.style.boxShadow = '';
-            element.style.transform = '';
-          });
-        }, 3000);
-      }
-    }, 200);
-  });
+  }
 }
 
 // Add shake and spin animations
@@ -242,51 +242,6 @@ function typeWriter(element, text, speed = 50) {
 //   const originalText = heroTitle.textContent;
 //   typeWriter(heroTitle, originalText, 30);
 // }
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-  contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Get form data
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
-
-    // Simple form validation
-    const requiredFields = ['name', 'email', 'business', 'message'];
-    let isValid = true;
-
-    requiredFields.forEach(field => {
-      const element = document.getElementById(field);
-      if (!data[field] || data[field].trim() === '') {
-        element.style.borderColor = '#ef4444';
-        isValid = false;
-      } else {
-        element.style.borderColor = '#334155';
-      }
-    });
-
-    if (!isValid) {
-      alert('Please fill in all required fields.');
-      return;
-    }
-
-    // Simulate form submission
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-
-    // Simulate API call
-    setTimeout(() => {
-      submitBtn.textContent = 'Message Sent!';
-      submitBtn.style.background = '#10b981';
-
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        this.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
         submitBtn.style.background = '';
       }, 3000);
     }, 2000);

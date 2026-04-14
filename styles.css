@@ -1409,6 +1409,35 @@ body::before {
   }
 }
 
+/* Thank You Page */
+.thank-you {
+  text-align: center;
+  padding: 8rem 0;
+}
+
+.thank-you-content h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.thank-you-content p {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.calendly-section {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 480px) {
   .container {
     padding: 0 1rem;
